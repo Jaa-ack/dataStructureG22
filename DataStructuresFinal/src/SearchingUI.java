@@ -1,4 +1,4 @@
-// 找書名有關鍵字的書並獲得連結
+//// 找書名有關鍵字的書並獲得連結
 //import org.jsoup.Jsoup;
 //import org.jsoup.nodes.Document;
 //import org.jsoup.nodes.Element;
@@ -8,8 +8,8 @@
 //public class SearchingUI{
 //
 //    public static void main(String[] args) {
-//        String topic = "horror"; // 替換成你想要查詢的主題
-//        String url = "https://www.goodreads.com/search?q=" + topic;
+//        String keyword = "history"; // 替換成你想要查詢的關鍵字
+//        String url = "https://www.goodreads.com/search?q=" + keyword;
 //
 //        try {
 //            Document doc = Jsoup.connect(url).get();

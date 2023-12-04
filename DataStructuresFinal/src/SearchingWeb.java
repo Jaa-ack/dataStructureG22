@@ -6,7 +6,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
-public class SearchingWeb {
+public class SearchingWeb { // 各個搜尋網站資料
 	private String name;
 	private String url;
 	private String content;

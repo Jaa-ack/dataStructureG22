@@ -1,26 +1,28 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class Score {
+public class Score { // 評分系統
 	private ArrayList<Keyword> keywordList;
 	private ArrayList<SearchingWeb> webList;
 	private String theme;
 	
+	// Constructor
 	public Score() {
 		keywordList = new ArrayList<Keyword>();
 		webList = new ArrayList<SearchingWeb>();
 	}
-	
 	public Score(String theme) {
 		this.theme = theme;
 		keywordList = new ArrayList<Keyword>();
 		webList = new ArrayList<SearchingWeb>();
 	}
 	
+	// 設定書籍主題
 	public void setTheme(String theme) {
 		this.theme = theme;
 	}
 	
+	// 增加關鍵字
 	public void addKeyword(Keyword keyword) {
 		for (int i = 0; i < keywordList.size(); i++) {
 			Keyword k = keywordList.get(i);
@@ -31,10 +33,12 @@ public class Score {
 		keywordList.add(keyword);
 	}
 	
+	// 增加搜尋網站
 	public void addWeb(SearchingWeb url) {
 		webList.add(url);
 	}
 	
+	// 清除指定名字關鍵字
 	public void deleteKeyword(String name) {
 		ArrayList<Keyword> found = new ArrayList<>();
 		
@@ -51,6 +55,7 @@ public class Score {
 		}
 	}
 	
+	// 清除指定名字搜尋網站
 	public void deleteWeb(String name) {
 		ArrayList<SearchingWeb> found = new ArrayList<>();
 		

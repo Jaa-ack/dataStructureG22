@@ -1,5 +1,5 @@
 
-public class Keyword {
+public class Keyword { // 各個關鍵字資料
 	private String name;
     private double weight;
     
