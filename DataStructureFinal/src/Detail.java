@@ -43,6 +43,16 @@ public class Detail {
 							break;
 						}
 					}
+					temp = content.substring(content.indexOf("好評推薦「"), content.indexOf("目錄列表"));
+					while (temp.contains("——")) {
+						if (temp.contains("「")) {
+							recommender.add(temp.substring(temp.indexOf("——"), temp.indexOf("「")));
+							temp = temp.substring(temp.indexOf("「"));
+						}else {
+							recommender.add(temp.substring(temp.indexOf("——")));
+							break;
+						}
+					}
 					
 					// 取得目錄
 					catalogue = content.substring(content.indexOf("目錄"), content.indexOf("序"));
@@ -51,9 +61,32 @@ public class Detail {
 					temp = content.substring(content.indexOf("內容簡介"), content.indexOf("推薦"));
 					int score = new Score(temp).score(keywords);
 				}else if (title.contains("Readmoo")) {
+					// 取得作者
+					String temp = content.substring(content.indexOf("作者簡介"));
+					author = temp.substring(0, temp.indexOf("）"));
 					
-				}else if (title.contains("誠品")) {
+					// 取得推薦人
+					temp = content.substring(content.indexOf("名人推薦"), content.indexOf("好評推薦"));
+					while (temp.contains("、")) {
+						recommender.add(temp.substring(temp.indexOf(0, temp.indexOf("、"))));
+						temp.substring(temp.indexOf("、"));
+					}
 					
+					// 取得簡介並評分
+					temp = content.substring(content.indexOf("詳細資料"), content.indexOf("作者簡介"));
+					int score = new Score(temp).score(keywords);
+				}else if (title.contains("誠品線上")) {
+					// 取得作者
+					String temp = content.substring(content.indexOf("作者"));
+					if (temp.contains("譯者")) {
+						author = temp.substring(0, temp.indexOf("譯者"));
+					}else if (temp.contains("出版社")){
+						author = temp.substring(0, temp.indexOf("出版社"));
+					}
+					
+					// 取得簡介並評分
+					temp = content.substring(content.indexOf("內容簡介"), content.indexOf("作者簡介"));
+					int score = new Score(temp).score(keywords);
 				}else {
 					int i = new Score(content).score(keywords);
 				}

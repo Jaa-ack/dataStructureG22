@@ -7,7 +7,7 @@ public class Score {
 		this.summary = summary;
 	}
 	
-	public int score(KeywordList keywords) {
+	public int score(KeywordList keywords) { // not yet
 		return 1;
 	}
 	
