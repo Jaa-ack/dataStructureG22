@@ -1,12 +1,103 @@
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
 public class Score {
+	public ArrayList<Keyword> keywords;
 
-	public Score() {
-
+	public Score(KeywordList keywords) throws IOException {
+		this.keywords = keywords.getkList();
 	}
 	
-	public int score(KeywordList keywords) { // not yet
-		return 1;
+	public int score(String bookName) throws IOException { // not yet
+		String content = fetchContent("https://www.google.com.tw/books/edition/" + bookName + "/3Dv1273wE6kC?hl=zh-TW&gbpv=0");
+		int score = 0;
+		for (int i = 0; i < keywords.size(); i++) {
+			int count = BoyerMoore(content, keywords.get(i).getName());
+			score += (keywords.size() - i) * count * keywords.get(i).getOrder();
+		}
+		return score;
 	}
+	
+	private String fetchContent(String citeUrl) throws IOException{
+		try {
+            Document document = Jsoup.connect(citeUrl).get();
+            // 獲取網頁內容
+            Element body = document.body();
+            String content = body.text();
+            return content;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(citeUrl);
+            return "";
+        }
+	}
+	
+	public int BoyerMoore(String T, String P){
+    	int i = T.length();
+    	int j = P.length();
+    	int times = 0;
+        
+        // Bonus: Implement Boyer-Moore Algorithm     
+    	
+    	for (int a = j; a < i; a++) {
+    		Boolean hasP = true;
+    		for (int x = j - 1; x >= 0; x--) {
+    			String badCharacter = Character.toString(T.charAt(a + x - j));
+    			String character = Character.toString(P.charAt(x));
+        		
+    			if (!(badCharacter.equals(character))) {
+        			hasP = false;
+        			String Preverse = new StringBuffer(P).reverse().toString();
+        			
+        			// bad-character shift rule
+        			int bcShift = 0;
+        			if (Preverse.indexOf(badCharacter, j - x - 1) == -1) {
+        				bcShift = x;
+        			}else {
+        				bcShift = Preverse.indexOf(badCharacter, j - x - 1) - (j - x - 1) - 1;
+        			}
+        			
+        			// good-suffix shift rule
+        			String goodSuffix = P.substring(x+1);
+        			int gsShift = 0;
+        			if (goodSuffix.length() > 0) {
+        				String test = new StringBuffer(goodSuffix).reverse().toString();
+            			
+        				for (int n = 0; n < goodSuffix.length(); n++) {
+            				test = new StringBuffer(goodSuffix.substring(n)).reverse().toString();
+            				if (Preverse.indexOf(test, j - x - 1) != -1) {
+            					gsShift = Preverse.indexOf(test, j - x - 1);
+            				}
+            			}
+            				
+            			if (gsShift == 0)
+            				gsShift = j - 1;
+            			
+        			}
+        			
+        			if (bcShift > gsShift) {
+        				a += bcShift;
+        			}else {
+        				a += gsShift;
+        			}
+        			break;
+        		}
+        	}
+    		
+    		if (hasP) {
+    			times++;
+    		}
+    	}
+
+        return times;
+    }
+
+	
 	
 //	public void getDetail(KeywordList keywords) {
 //	for (String title : searchingResult.keySet()) {

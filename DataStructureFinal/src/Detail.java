@@ -133,20 +133,6 @@ public class Detail {
     }
 	
 	private String fetchContent(String citeUrl) throws IOException{
-//		URL url = new URL(citeUrl);
-//		URLConnection conn = url.openConnection();
-//		InputStream in = conn.getInputStream();
-//		BufferedReader br = new BufferedReader(new InputStreamReader(in));
-//
-//		String retVal = "";
-//
-//		String line = null;
-//		while ((line = br.readLine()) != null)
-//		{
-//			retVal = retVal + line + "\n";
-//		}
-//
-//		return retVal;
 		try {
             Document document = Jsoup.connect(citeUrl).get();
             // 獲取網頁內容
