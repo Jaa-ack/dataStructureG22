@@ -20,6 +20,12 @@ public class KeywordList{
 		}
 		lst.add(keyword);
 	}
+	
+	public void addList(KeywordList list) {
+		for (Keyword keyword : list.getkList()) {
+			lst.add(keyword);
+		}
+	}
 
 	public void outputIndex(int i){
 		if (i >= lst.size()){

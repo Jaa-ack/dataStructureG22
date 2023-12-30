@@ -10,15 +10,15 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class GoogleSearching {
-	public String bookName;
+public class GoogleQuery {
+	public String keyword;
 	public String url;
 	public String content;
 	
-	public GoogleSearching(String bookName){
-		this.bookName = bookName;
+	public GoogleQuery(String keyword){
+		this.keyword = keyword;
 		try {
-			String encodeKeyword=java.net.URLEncoder.encode(bookName,"utf-8");
+			String encodeKeyword=java.net.URLEncoder.encode(keyword,"utf-8");
 			this.url = "https://www.google.com/search?q="+encodeKeyword+"&oe=utf8&num=20";
 		}catch (Exception e){
 			System.out.println(e.getMessage());
