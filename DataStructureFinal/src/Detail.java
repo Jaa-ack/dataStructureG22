@@ -12,6 +12,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
 import com.github.houbb.opencc4j.util.ZhConverterUtil;
 import com.huaban.analysis.jieba.JiebaSegmenter;
 import com.huaban.analysis.jieba.SegToken;
@@ -29,16 +33,18 @@ public class Detail {
 		
 		int i = 0;
 		for(String url: searchingResult.values()) {
-			if (i < 10) {
-				i++;
-			}else {
-				break;
-			}
-			if (url.contains("wikipedia")) {
-				firstList = getKeyword(url, 10);
-				break;
-			}else {
-				firstList.addList(getKeyword(url, 1));
+			if (!(url.contains("pdf") || url.contains("www.cw.com.tw"))) {
+				if (i < 10) {
+					i++;
+				}else {
+					break;
+				}
+				if (url.contains("wikipedia")) {
+					firstList = getKeyword(url, 10);
+					break;
+				}else {
+					firstList.addList(getKeyword(url, 1));
+				}
 			}
 		}
 		return firstList;
@@ -53,22 +59,24 @@ public class Detail {
 		
 		int i = 0;
 		for(String url: searchingResult.values()) {
-			if (i < 5) {
-				i++;
-			}else {
-				break;
+			if (!(url.contains("pdf") || url.contains("www.cw.com.tw"))) {
+				if (i < 5) {
+					i++;
+				}else {
+					break;
+				}
+				list.addList(getKeyword(url, 10));
 			}
-			list.addList(getKeyword(url, 10));
 		}
 		return list;
 	}
 	
-	public KeywordList getKeyword(String url, int num) { // 找網頁中出現最多次的10詞
+	public KeywordList getKeyword(String url, int num) { // 找網頁中出現最多次的詞
 		String content;
 		KeywordList keywords = new KeywordList();
 		try {
 			content = fetchContent(url);
-		
+			
 	        String article = ZhConverterUtil.toTraditional(content);
 			
 	        // 使用jieba分詞工具進行中文分詞
@@ -104,7 +112,6 @@ public class Detail {
 				Map.Entry<String, Integer> entry = sortedWords.get(i);
 				keywords.add(new Keyword(entry.getKey(), 1, entry.getValue()));
 			}
-			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -126,19 +133,30 @@ public class Detail {
     }
 	
 	private String fetchContent(String citeUrl) throws IOException{
-		URL url = new URL(citeUrl);
-		URLConnection conn = url.openConnection();
-		InputStream in = conn.getInputStream();
-		BufferedReader br = new BufferedReader(new InputStreamReader(in));
-
-		String retVal = "";
-
-		String line = null;
-		while ((line = br.readLine()) != null)
-		{
-			retVal = retVal + line + "\n";
-		}
-
-		return retVal;
+//		URL url = new URL(citeUrl);
+//		URLConnection conn = url.openConnection();
+//		InputStream in = conn.getInputStream();
+//		BufferedReader br = new BufferedReader(new InputStreamReader(in));
+//
+//		String retVal = "";
+//
+//		String line = null;
+//		while ((line = br.readLine()) != null)
+//		{
+//			retVal = retVal + line + "\n";
+//		}
+//
+//		return retVal;
+		try {
+            Document document = Jsoup.connect(citeUrl).get();
+            // 獲取網頁內容
+            Element body = document.body();
+            String content = body.text();
+            return content;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(citeUrl);
+            return "";
+        }
 	}
 }

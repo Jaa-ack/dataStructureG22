@@ -25,7 +25,6 @@ public class GoogleQuery {
 				String encodeKeyword = java.net.URLEncoder.encode(keyword,"utf-8");
 				this.url = "https://www.google.com/search?tbm=bks&q=" + encodeKeyword;
 			}
-			
 		}catch (Exception e){
 			System.out.println(e.getMessage());
 		}
@@ -50,14 +49,12 @@ public class GoogleQuery {
 		return retVal;
 	}
 	
-	public HashMap<String, String> search() throws IOException{
+	public HashMap<String, String> query() throws IOException{
 		if(content == null){
 			content = fetchContent();
 		}
 
 		HashMap<String, String> retVal = new HashMap<String, String>();
-		
-		//using Jsoup analyze html string
 		Document doc = Jsoup.parse(content);
 		
 		//select particular element(tag) which you want 
@@ -80,7 +77,29 @@ public class GoogleQuery {
 //				e.printStackTrace();
 			}
 		}
-		
 		return retVal;
+	}
+	
+	public HashMap<String, String> search() throws IOException {
+        Document doc = Jsoup.connect(url).get();
+        HashMap<String, String> retVal = new HashMap<String, String>();
+        String title = "";
+        String link = "";
+
+        // 找到搜尋結果中每個網站的標題和名稱
+        Elements searchResults = doc.select("div.g");
+        for (Element result : searchResults) {
+            Element titleElement = result.selectFirst("h3");
+            if (titleElement != null) {
+                title = titleElement.text();
+            }
+
+            Element linkElement = result.selectFirst("a");
+            if (linkElement != null) {
+                link = linkElement.attr("href");
+            }
+            retVal.put(title, link);
+        }
+        return retVal;
 	}
 }
