@@ -13,9 +13,16 @@ public class KeywordList{
 	
 	public void add(Keyword keyword){
 		for (int i = 0; i < lst.size(); i++) {
-			if (keyword.getWeight() <= lst.get(i).getWeight()) {
-				lst.add(i, keyword);
-				return;
+			if (keyword.getName().equals(lst.get(i).getName())) {
+				if (keyword.getOrder() == (lst.get(i).getOrder())) {
+					lst.set(i, new Keyword(keyword.getName(), keyword.getOrder(), keyword.getTimes() + lst.get(i).getTimes()));
+				}
+			}
+			if (keyword.getOrder() <= lst.get(i).getOrder()) {
+				if (keyword.getTimes() <= lst.get(i).getTimes()) {
+					lst.add(i, keyword);
+					return;
+				}
 			}
 		}
 		lst.add(keyword);
@@ -27,94 +34,98 @@ public class KeywordList{
 		}
 	}
 
-	public void outputIndex(int i){
-		if (i >= lst.size()){
-			System.out.println("InvalidOperation");
-			return;
-		}
-		Keyword k = lst.get(i);
-		System.out.println(k);
-	}
-
-	public void outputHas(String pattern){
+	public LinkedList<Keyword> has(String name){
 		LinkedList<Keyword> results = new LinkedList<>();
 		for (int i = 0; i < lst.size(); i++){
 			Keyword k = lst.get(i);
-			if (k.name.contains(pattern)){
+			if (k.getName().equals(name)){
 				results.add(k);
 			}
 		}if (results.isEmpty()){
-			System.out.println("NotFound");
+			return null;
 		}else{
-			printKeywordList(results);
+			return results;
 		}
 	}
 
-	public void outputName(String pattern){
-		LinkedList<Keyword> results = new LinkedList<>();
+	public void deleteKeyword(Keyword keyword){
+		ArrayList<Keyword> found = new ArrayList<>();
+		for (Keyword key : lst) {
+			if (key == keyword){
+				found.add(keyword);
+			}
+		}
+		
+		if (!found.isEmpty()){
+			lst.removeAll(found);
+		}
+	}
+	
+	public KeywordList outputName(String name){
+		KeywordList result = new KeywordList();
 		for (int i = 0; i < lst.size(); i++){
 			Keyword k = lst.get(i);
-			if (k.name.equals(pattern)){
-				results.add(k);
+			if (k.getName().equals(name)){
+				result.add(k);
 			}
 		}
-		if (results.isEmpty()){
-			System.out.println("NotFound");
-		}else{
-			printKeywordList(results);
-		}
+		return result;
 	}
 
-	public void outputFirstN(int n){
-		if (n > lst.size()){
-			System.out.println("InvalidOperation");
-			return;
-		}
-		LinkedList<Keyword> found = new LinkedList<>();
+	
+	
+	
+	
+//	public void outputFirstN(int n){
+//		if (n > lst.size()){
+//			System.out.println("InvalidOperation");
+//			return;
+//		}
+//		LinkedList<Keyword> found = new LinkedList<>();
+//
+//		for (int i = 0; i < n; i++){
+//			Keyword k = lst.get(i);
+//			found.add(k);
+//		}
+//		printKeywordList(found);
+//	}
+//
+//	public void deleteIndex(int i){
+//		if (i >= lst.size()){
+//			return;
+//		}
+//		lst.remove(i);
+//	}
 
-		for (int i = 0; i < n; i++){
-			Keyword k = lst.get(i);
-			found.add(k);
-		}
-		printKeywordList(found);
-	}
-
-	public void deleteIndex(int i){
-		if (i >= lst.size()){
-			return;
-		}
-		lst.remove(i);
-	}
-
-	public void deleteHas(String pattern){
-		
-		LinkedList<Keyword> found = new LinkedList<>();
-		
-		for (Keyword keyword : lst) {
-			if (keyword.name.contains(pattern)){
-				found.add(keyword);
-			}
-		}
-		
-		if (!found.isEmpty()){
-			lst.removeAll(found);
-		}
-	}
-
-	public void deleteName(String name){
-		
-		LinkedList<Keyword> found = new LinkedList<>();
-		
-		for (Keyword keyword : lst) {
-			if (keyword.name.equals(name)){
-				found.add(keyword);
-			}
-		}
-		
-		if (!found.isEmpty()){
-			lst.removeAll(found);
-		}
-	}
+//	public void deleteHas(String pattern){
+//		
+//		LinkedList<Keyword> found = new LinkedList<>();
+//		
+//		for (Keyword keyword : lst) {
+//			if (keyword.name.contains(pattern)){
+//				found.add(keyword);
+//			}
+//		}
+//		
+//		if (!found.isEmpty()){
+//			lst.removeAll(found);
+//		}
+//	}
+//
+//	public void deleteName(String name){
+//		
+//		LinkedList<Keyword> found = new LinkedList<>();
+//		
+//		for (Keyword keyword : lst) {
+//			if (keyword.name.equals(name)){
+//				found.add(keyword);
+//			}
+//		}
+//		
+//		if (!found.isEmpty()){
+//			lst.removeAll(found);
+//		}
+//	}
 
 	public void deleteAll(){
 		lst = new ArrayList<Keyword>();

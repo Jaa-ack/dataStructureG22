@@ -1,15 +1,12 @@
 public class Keyword {
-	public String name;
-    public float order;
+	private String name;
+    private float order;
+    private int times; 
     
-    public Keyword(String name, float order){
+    public Keyword(String name, float order, int times){
 		this.name = name;
 		this.order = order;
-    }
-    
-    @Override
-    public String toString(){
-    	return "["+name+","+order+"]";
+		this.times = times;
     }
     
     public String getName()
@@ -17,8 +14,12 @@ public class Keyword {
     	return name;
     }
     
-    public float getWeight()
+    public float getOrder()
     {
     	return order;
+    }
+    
+    public int getTimes() {
+    	return times;
     }
 }
