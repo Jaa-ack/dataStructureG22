@@ -12,9 +12,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.text.AbstractDocument.Content;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import com.github.houbb.opencc4j.util.ZhConverterUtil;
 import com.huaban.analysis.jieba.JiebaSegmenter;
@@ -31,20 +34,20 @@ public class Detail {
 		}
 		KeywordList firstList = new KeywordList();
 		
-		int i = 0;
-		for(String url: searchingResult.values()) {
-			if (!(url.contains("pdf") || url.contains("www.cw.com.tw"))) {
-				if (i < 10) {
-					i++;
-				}else {
-					break;
-				}
-				if (url.contains("wikipedia")) {
-					firstList = getKeyword(url, 10);
-					break;
-				}else {
-					firstList.addList(getKeyword(url, 1));
-				}
+		ArrayList<String> urls = new ArrayList<>();
+		for(String value: searchingResult.values()) {
+			urls.add(value);
+		}
+        ArrayList<String> denyList = readDenyList("src/main/resources/denyWebsite.txt");
+        ArrayList<String> filteredUrls = filterDeniedSites(urls, denyList);
+        
+		for (int i = 0; i < Math.min(filteredUrls.size(), 10); i++) {
+			if (filteredUrls.get(i).contains("wikipedia")) {
+				firstList = getKeyword(filteredUrls.get(i), 10);
+				break;
+			}else {
+				KeywordList list = getKeyword(filteredUrls.get(i), 2);
+				firstList.addList(list);
 			}
 		}
 		return firstList;
@@ -57,17 +60,18 @@ public class Detail {
 		}
 		KeywordList list = new KeywordList();
 		
-		int i = 0;
-		for(String url: searchingResult.values()) {
-			if (!(url.contains("pdf") || url.contains("www.cw.com.tw"))) {
-				if (i < 5) {
-					i++;
-				}else {
-					break;
-				}
-				list.addList(getKeyword(url, 10));
-			}
+		ArrayList<String> urls = new ArrayList<>();
+		for(String value: searchingResult.values()) {
+			urls.add(value);
 		}
+        ArrayList<String> denyList = readDenyList("src/main/resources/denyWebsite.txt");
+        ArrayList<String> filteredUrls = filterDeniedSites(urls, denyList);
+		
+        for (int i = 0; i < Math.min(filteredUrls.size(), 10); i++) {
+			KeywordList keywords = getKeyword(filteredUrls.get(i), 10);
+			list.addList(keywords);
+		}
+		
 		return list;
 	}
 	
@@ -75,7 +79,7 @@ public class Detail {
 		String content;
 		KeywordList keywords = new KeywordList();
 		try {
-			content = fetchContent(url);
+			content = fetchParagraph(url);
 			
 	        String article = ZhConverterUtil.toTraditional(content);
 			
@@ -132,12 +136,11 @@ public class Detail {
         return stopWords;
     }
 	
-	private String fetchContent(String citeUrl) throws IOException{
+	private String fetchParagraph(String citeUrl) throws IOException{
 		try {
-            Document document = Jsoup.connect(citeUrl).get();
-            // 獲取網頁內容
-            Element body = document.body();
-            String content = body.text();
+			Document doc = Jsoup.connect(citeUrl).get();
+            Elements paragraphs = doc.select("p, h1, h2, h3, h4, h5, h6"); // 選擇所有的段落 <p>
+            String content = paragraphs.text();
             return content;
         } catch (Exception e) {
             e.printStackTrace();
@@ -145,4 +148,30 @@ public class Detail {
             return "";
         }
 	}
+
+	// 讀取 denyWebsite.txt 中的內容並返回一個包含拒絕網站的列表
+    private ArrayList<String> readDenyList(String fileName) {
+        ArrayList<String> denyList = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                denyList.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return denyList;
+    }
+
+    // 過濾掉包含在拒絕清單中的 URL
+    private static ArrayList<String> filterDeniedSites(List<String> urls, List<String> denyList) {
+    	ArrayList<String> filteredUrls = new ArrayList<>();
+    	for (String urlString : urls) {
+            boolean shouldSkip = denyList.stream().anyMatch(urlString::contains);
+            if (!shouldSkip) {
+                filteredUrls.add(urlString);
+            }
+        }
+        return filteredUrls;
+    }
 }

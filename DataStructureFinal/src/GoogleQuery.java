@@ -15,16 +15,11 @@ public class GoogleQuery {
 	public String url;
 	public String content;
 	
-	public GoogleQuery(String keyword, String category){
+	public GoogleQuery(String keyword){
 		this.keyword = keyword;
 		try {
-			if (category.equals("google")) {
-				String encodeKeyword=java.net.URLEncoder.encode(keyword,"utf-8");
-				this.url = "https://www.google.com/search?q="+encodeKeyword+"&oe=utf8&num=20";
-			}else if (category.equals("book")) {
-				String encodeKeyword = java.net.URLEncoder.encode(keyword,"utf-8");
-				this.url = "https://www.google.com/search?tbm=bks&q=" + encodeKeyword;
-			}
+			String encodeKeyword=java.net.URLEncoder.encode(keyword,"utf-8");
+			this.url = "https://www.google.com/search?q="+encodeKeyword+"&oe=utf8&num=20";
 		}catch (Exception e){
 			System.out.println(e.getMessage());
 		}

@@ -1,9 +1,9 @@
 public class Keyword {
 	private String name;
-    private float order;
+    private int order;
     private int times; 
     
-    public Keyword(String name, float order, int times){
+    public Keyword(String name, int order, int times){
 		this.name = name;
 		this.order = order;
 		this.times = times;
@@ -14,7 +14,7 @@ public class Keyword {
     	return name;
     }
     
-    public float getOrder()
+    public int getOrder()
     {
     	return order;
     }
