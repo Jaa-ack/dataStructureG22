@@ -68,7 +68,7 @@ public class Detail {
         ArrayList<String> filteredUrls = filterDeniedSites(urls, denyList);
 		
         for (int i = 0; i < Math.min(filteredUrls.size(), 10); i++) {
-			KeywordList keywords = getKeyword(filteredUrls.get(i), 10);
+			KeywordList keywords = getKeyword(filteredUrls.get(i), 2);
 			list.addList(keywords);
 		}
 		
@@ -164,7 +164,7 @@ public class Detail {
     }
 
     // 過濾掉包含在拒絕清單中的 URL
-    private static ArrayList<String> filterDeniedSites(List<String> urls, List<String> denyList) {
+    private ArrayList<String> filterDeniedSites(List<String> urls, List<String> denyList) {
     	ArrayList<String> filteredUrls = new ArrayList<>();
     	for (String urlString : urls) {
             boolean shouldSkip = denyList.stream().anyMatch(urlString::contains);

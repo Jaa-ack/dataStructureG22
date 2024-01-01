@@ -15,20 +15,26 @@ public class KeywordList{
 		if (keyword.getTimes() < 2) {
 			return;
 		}
-		for (int i = 0; i < list.size(); i++) {
-			if (hasName(keyword.getName()) != null) { // 如果有一樣名字的留order, times最大的 
-				if (hasName(keyword.getName()).getOrder() < keyword.getOrder()) {
-					list.remove(hasName(keyword.getName()));
+		if (hasName(keyword.getName()) != null) { // 如果有一樣名字的留order, times最大的
+			Keyword key = hasName(keyword.getName());
+			if (key.getOrder() < keyword.getOrder()) {
+				list.remove(key);
+				add(keyword);
+				return;
+			}else if (key.getOrder() == keyword.getOrder()) {
+				if (key.getTimes() <= keyword.getTimes()) {
+					list.remove(key);
 					add(keyword);
 					return;
-				}else if (hasName(keyword.getName()).getOrder() == keyword.getOrder()) {
-					if (hasName(keyword.getName()).getTimes() < keyword.getTimes()) {
-						list.remove(hasName(keyword.getName()));
-						add(keyword);
-						return;
-					}
+				}else {
+					return;
 				}
+			}else {
+				return;
 			}
+		}
+		
+		for (int i = 0; i < list.size(); i++) {
 			if (keyword.getOrder() == list.get(i).getOrder()) { // order, times越小越前面
 				if (keyword.getTimes() <= list.get(i).getTimes()) {
 					list.add(i,keyword);
