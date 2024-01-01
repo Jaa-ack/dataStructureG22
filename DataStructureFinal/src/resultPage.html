@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="utf-8">
+
+    <style type = "text/css">
+       #search{ 
+                opacity: 0.80;
+                background: #7DBEB4;
+                border:2px black solid;
+                text-align: left;
+                font-size: 23px;
+                font-weight: bold;
+                padding: 4px;
+                padding-left: 10px;
+                height: 60px;
+                width: 800px;
+                position: absolute;
+                left:50%;
+                top: 7%;
+                margin: -16px 0 0 -440px;
+                
+            }
+            
+            #searchButton{
+                opacity: 0.80;
+                -webkit-text-fill-color:black;
+                background:#739DB0;
+                border: 2px black solid;
+                text-align: center;
+                font-size: 24px;
+                padding: 6px;
+                height: 60px;
+                width: 80px;
+                position: absolute;
+                left:50%;
+                top: 7%;
+                margin: -16px 0 0 360px;
+
+            }
+
+            .results{
+                position: absolute;
+                left: 50%;
+                top:14%;
+                margin: 0px 0 0 -440px;
+                width: 880px;
+                height: 1600px;
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .results div{
+                background-color:#517C8E;
+                opacity: 0.80;
+                width: 880px;
+                height: 144px;
+                margin-top: 16px;
+                border-radius: 0px;
+                display: flex;
+                flex-direction: row;
+            }
+
+            .results div #booktitle{
+                background-color:#517C8E;
+                opacity: 0.80;
+                width: 700px;
+                height: 70px;
+                margin-top: 20px;
+                border-radius: 0px;
+                font-size: 45px;
+                margin-left: 30px;
+                display: flex;
+                flex-direction: column;
+                font-weight: bold;
+                font-family:Arial, Helvetica, sans-serif;
+            }
+            .results div #bookinfo{
+                background-color:#517C8E;
+                opacity: 0.80;
+                width: 700px;
+                height: 40px;
+                margin-top: 5px;
+                margin-left: 10%;
+                border-radius: 0px;
+                font-size: 25px;
+                margin-left: 0px;
+                font-weight: bold;
+                color:black;
+            }
+
+            .results div div{
+                background-color:#7DBEB4;
+                opacity: 0.80;
+                height: 144px;
+                width: 144px;
+                margin-top: 0px;
+                border-radius: 0px;
+                display: flex;
+                flex-direction: row;
+                
+            }
+
+            
+            .results div div img{
+                top: 0px;
+                bottom: 0px;
+                left: 0px;
+                right: 0px;
+                margin: auto;
+            }
+
+            a{
+                color: black;
+                text-decoration: none;
+            }
+    </style>
+
+    <body bgcolor="1F2D32">
+
+        <input id="search" type="search" value=""></input>
+        <input id="searchButton" type="button" value="搜尋" class="input_box" onclick="search()">
+
+        <div class="results">
+
+            <div>
+                <div>
+                    <img src="1.png">
+                </div>
+                <div id="booktitle">
+                    <a href=""> 書籍標題</a>   
+                    <div id="bookinfo">
+                    書籍資訊
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div>
+                    <img src="2.png">
+                </div>
+                <div id="booktitle">
+                    <a href=""> 書籍標題</a>   
+                    <div id="bookinfo">
+                    書籍資訊
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <img src="3.png">
+                </div>
+                <div id="booktitle">
+                    <a href=""> 書籍標題</a>   
+                    <div id="bookinfo">
+                    書籍資訊
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <img src="4.png">
+                </div>
+                <div id="booktitle">
+                    <a href=""> 書籍標題</a>   
+                    <div id="bookinfo">
+                    書籍資訊
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <img src="5.png">
+                </div>
+                <div id="booktitle">
+                    <a href=""> 書籍標題</a>   
+                    <div id="bookinfo">
+                    書籍資訊
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <img src="6.png">
+                </div>
+                <div id="booktitle">
+                    <a href=""> 書籍標題</a>   
+                    <div id="bookinfo">
+                    書籍資訊
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <img src="7.png">
+                </div>
+                <div id="booktitle">
+                    <a href=""> 書籍標題</a>   
+                    <div id="bookinfo">
+                    書籍資訊
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <img src="8.png">
+                </div>
+                <div id="booktitle">
+                    <a href=""> 書籍標題</a>   
+                    <div id="bookinfo">
+                    書籍資訊
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <img src="9.png">
+                </div>
+                <div id="booktitle">
+                    <a href=""> 書籍標題</a>   
+                    <div id="bookinfo">
+                    書籍資訊
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <img src="10.png">
+                </div>
+                <div id="booktitle">
+                    <a href=""> 書籍標題</a>   
+                    <div id="bookinfo">
+                    書籍資訊
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </body>
+
+    <script type="text/javascript">
+        function search(){
+
+            var text = "";
+            var text = document.getElementById('search').value;
+
+            if(text !== ""){
+                location.href=("resultPage.html");
+             }else{
+               alert('請輸入關鍵字!');
+            }
+
+        }
+    </script>
+</html>
+
+    
