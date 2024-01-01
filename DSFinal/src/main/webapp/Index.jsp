@@ -67,7 +67,7 @@
             var text = document.getElementById('search').value;
 
             if(text !== ""){
-                location.href=("resultPage.html");
+                location.href=("waitingPage.html");
              }else{
                alert('請輸入關鍵字!');
             }
