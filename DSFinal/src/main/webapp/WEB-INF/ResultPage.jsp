@@ -134,7 +134,7 @@
                 <div id="booktitle">
                     <a href="${segments[0]}"> ${segments[1]}</a>   
                     <div id="bookinfo">
-                    ${segments[2]}
+                    相關關鍵字：${segments[2]}
                     </div>
                 </div>
             </div>
@@ -148,7 +148,7 @@
                 <div id="booktitle">
                     <a href="${segments[3]}"> ${segments[4]}</a>   
                     <div id="bookinfo">
-                    ${segments[5]}
+                    相關關鍵字：${segments[5]}
                     </div>
                 </div>
             </div>
@@ -162,7 +162,7 @@
                 <div id="booktitle">
                     <a href="${segments[6]}"> ${segments[7]}</a>   
                     <div id="bookinfo">
-                    ${segments[8]}
+                    相關關鍵字：${segments[8]}
                     </div>
                 </div>
             </div>
@@ -176,7 +176,7 @@
                 <div id="booktitle">
                     <a href="${segments[9]}"> ${segments[10]}</a>   
                     <div id="bookinfo">
-                    ${segments[11]}
+                    相關關鍵字：${segments[11]}
                     </div>
                 </div>
             </div>
@@ -190,7 +190,7 @@
                 <div id="booktitle">
                     <a href="${segments[12]}"> ${segments[13]}</a>   
                     <div id="bookinfo">
-                    ${segments[14]}
+                    相關關鍵字：${segments[14]}
                     </div>
                 </div>
             </div>
@@ -204,7 +204,7 @@
                 <div id="booktitle">
                     <a href="${segments[15]}"> ${segments[16]}</a>   
                     <div id="bookinfo">
-                    ${segments[17]}
+                    相關關鍵字：${segments[17]}
                     </div>
                 </div>
             </div>
@@ -218,7 +218,7 @@
                 <div id="booktitle">
                     <a href="${segments[18]}"> ${segments[19]}</a>   
                     <div id="bookinfo">
-                    ${segments[20]}
+                    相關關鍵字：${segments[20]}
                     </div>
                 </div>
             </div>
@@ -232,7 +232,7 @@
                 <div id="booktitle">
                     <a href="${segments[21]}"> ${segments[22]}</a>   
                     <div id="bookinfo">
-                    ${segments[23]}
+                    相關關鍵字：${segments[23]}
                     </div>
                 </div>
             </div>
@@ -246,7 +246,7 @@
                 <div id="booktitle">
                     <a href="${segments[24]}"> ${segments[25]}</a>   
                     <div id="bookinfo">
-                    ${segments[26]}
+                    相關關鍵字：${segments[26]}
                     </div>
                 </div>
             </div>
@@ -260,7 +260,7 @@
                 <div id="booktitle">
                     <a href="${segments[27]}"> ${segments[28]}</a>   
                     <div id="bookinfo">
-                    ${segments[29]}
+                    相關關鍵字：${segments[29]}
                     </div>
                 </div>
             </div>

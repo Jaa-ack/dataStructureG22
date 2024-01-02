@@ -72,4 +72,14 @@ public class KeywordList{
 		}
 		return null;
 	}
+
+	public ArrayList<String> outputOrder(int order){
+		ArrayList<String> retVal = new ArrayList<String>();
+		for (Keyword key : list) {
+			if (key.getOrder() == order) {
+				retVal.add(key.getName());
+			}
+		}
+		return retVal;
+	}
 }

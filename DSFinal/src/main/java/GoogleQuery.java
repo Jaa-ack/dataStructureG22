@@ -27,6 +27,10 @@ public class GoogleQuery {
 		}
 	}
 	
+	public GoogleQuery(WebNode node) {
+		this.url = node.webPage.url;
+	}
+	
 	private String fetchContent() throws IOException{
 		String retVal = "";
 
@@ -47,33 +51,16 @@ public class GoogleQuery {
 	}
 	
 	public HashMap<String, String> query() throws IOException{
-		if(content == null){
-			content = fetchContent();
-		}
-
 		HashMap<String, String> retVal = new HashMap<String, String>();
-		Document doc = Jsoup.parse(content);
+		Document doc = Jsoup.connect(url).get();
+        Elements links = doc.select("a[href]"); // 選擇所有帶有 href 屬性的 a 標籤
+        
+        for (Element link : links) {
+        	String title = link.text(); // 取得連結的文字內容（標題）
+            String subLink = link.attr("abs:href"); // 取得絕對連結
+            retVal.put(title, subLink);
+        }
 		
-		//select particular element(tag) which you want 
-		Elements lis = doc.select("div");
-		lis = lis.select(".kCrYT");
-		
-		for(Element li : lis){
-			try {
-				String citeUrl = li.select("a").get(0).attr("href").replace("/url?q=", "");
-				String title = li.select("a").get(0).select(".vvjwJb").text();
-				
-				if(title.equals("")) {
-					continue;
-				}
-				
-				//put title and pair into HashMap
-				retVal.put(title, citeUrl);
-
-			} catch (IndexOutOfBoundsException e) {
-//				e.printStackTrace();
-			}
-		}
 		return retVal;
 	}
 	
