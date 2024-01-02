@@ -6,6 +6,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import jakarta.servlet.http.HttpServlet;
+
 public class Score {
 	public ArrayList<Keyword> keywords;
 

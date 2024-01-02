@@ -23,6 +23,8 @@ import com.github.houbb.opencc4j.util.ZhConverterUtil;
 import com.huaban.analysis.jieba.JiebaSegmenter;
 import com.huaban.analysis.jieba.SegToken;
 
+import jakarta.servlet.http.HttpServlet;
+
 public class Detail {
 	public Detail() {
 	}

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <style type = "text/css">
 
-            #search{ 
+            input[type="text"]{ 
                 opacity: 0.80;
                 background: #7DBEB4;
                 border:2px black solid;
@@ -23,7 +23,7 @@
                 
             }
             
-            #searchButton{
+            input[type="submit"]{
                 opacity: 0.80;
                 -webkit-text-fill-color:black;
                 background:#739DB0;
@@ -53,24 +53,23 @@
 
     <body bgcolor="1F2D32">
 
-        <div id = "searchArea">
-            <input id="search" type="search" ></input>
-            <input id="searchButton" type="button" value="搜尋" class="input_box" onclick="search()">
-        </div>
+        <form action="SearchServlet" method="post" onsubmit="return validateForm()">
+            <input type="text" id="searchTerm" name="searchTerm">
+            <input type="submit" value="搜尋">
+		</form>
 
     </body>
 
-    <script type="text/javascript">
-        function search(){
+    <script>
+		function validateForm() {
 
-            var text = "";
-            var text = document.getElementById('search').value;
-
-            if(text !== ""){
-                location.href=("waitingPage.html");
-             }else{
-               alert('請輸入關鍵字!');
+            var searchTerm = document.getElementById("searchTerm").value;
+            
+            if(searchTerm.trim() === ""){
+            	alert('請輸入關鍵字!');
+                return false;
             }
+            return true;
 
         }
     </script>

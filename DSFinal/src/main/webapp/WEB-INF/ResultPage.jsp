@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <meta charset="utf-8">
 
     <style type = "text/css">
-       #search{ 
+			input[type="text"]{ 
                 opacity: 0.80;
                 background: #7DBEB4;
                 border:2px black solid;
@@ -23,7 +23,7 @@
                 
             }
             
-            #searchButton{
+            input[type="submit"]{
                 opacity: 0.80;
                 -webkit-text-fill-color:black;
                 background:#739DB0;
@@ -119,138 +119,168 @@
 
     <body bgcolor="1F2D32">
 
-        <input id="search" type="search" value=""></input>
-        <input id="searchButton" type="button" value="搜尋" class="input_box" onclick="search()">
+		<form action="${requestUri}" method="post" onsubmit="return validateForm()">
+            <input id="search" type="text" id="searchTerm" name="searchTerm">
+            <input type="submit" value="搜尋">
+		</form>
 
         <div class="results">
-
+			
+			<c:if test="${result.size() > 2}">
             <div>
                 <div>
                     <img src="images/1.png">
                 </div>
                 <div id="booktitle">
-                    <a href=""> 書籍標題</a>   
+                    <a href="${segments[0]}"> ${segments[1]}</a>   
                     <div id="bookinfo">
-                    書籍資訊
+                    ${segments[2]}
                     </div>
                 </div>
             </div>
-
+            </c:if>
+			
+			<c:if test="${result.size() > 5}">
             <div>
                 <div>
                     <img src="images/2.png">
                 </div>
                 <div id="booktitle">
-                    <a href=""> 書籍標題</a>   
+                    <a href="${segments[3]}"> ${segments[4]}</a>   
                     <div id="bookinfo">
-                    書籍資訊
+                    ${segments[5]}
                     </div>
                 </div>
             </div>
+            </c:if>
+            
+            <c:if test="${result.size() > 8}">
             <div>
                 <div>
                     <img src="images/3.png">
                 </div>
                 <div id="booktitle">
-                    <a href=""> 書籍標題</a>   
+                    <a href="${segments[6]}"> ${segments[7]}</a>   
                     <div id="bookinfo">
-                    書籍資訊
+                    ${segments[8]}
                     </div>
                 </div>
             </div>
+            </c:if>
+            
+            <c:if test="${result.size() > 11}">
             <div>
                 <div>
                     <img src="images/4.png">
                 </div>
                 <div id="booktitle">
-                    <a href=""> 書籍標題</a>   
+                    <a href="${segments[9]}"> ${segments[10]}</a>   
                     <div id="bookinfo">
-                    書籍資訊
+                    ${segments[11]}
                     </div>
                 </div>
             </div>
+            </c:if>
+            
+            <c:if test="${result.size() > 14}">
             <div>
                 <div>
                     <img src="images/5.png">
                 </div>
                 <div id="booktitle">
-                    <a href=""> 書籍標題</a>   
+                    <a href="${segments[12]}"> ${segments[13]}</a>   
                     <div id="bookinfo">
-                    書籍資訊
+                    ${segments[14]}
                     </div>
                 </div>
             </div>
+            </c:if>
+            
+            <c:if test="${result.size() > 17}">
             <div>
                 <div>
                     <img src="images/6.png">
                 </div>
                 <div id="booktitle">
-                    <a href=""> 書籍標題</a>   
+                    <a href="${segments[15]}"> ${segments[16]}</a>   
                     <div id="bookinfo">
-                    書籍資訊
+                    ${segments[17]}
                     </div>
                 </div>
             </div>
+            </c:if>
+            
+            <c:if test="${result.size() > 20}">
             <div>
                 <div>
                     <img src="images/7.png">
                 </div>
                 <div id="booktitle">
-                    <a href=""> 書籍標題</a>   
+                    <a href="${segments[18]}"> ${segments[19]}</a>   
                     <div id="bookinfo">
-                    書籍資訊
+                    ${segments[20]}
                     </div>
                 </div>
             </div>
+            </c:if>
+            
+            <c:if test="${result.size() > 23}">
             <div>
                 <div>
                     <img src="images/8.png">
                 </div>
                 <div id="booktitle">
-                    <a href=""> 書籍標題</a>   
+                    <a href="${segments[21]}"> ${segments[22]}</a>   
                     <div id="bookinfo">
-                    書籍資訊
+                    ${segments[23]}
                     </div>
                 </div>
             </div>
+            </c:if>
+            
+            <c:if test="${result.size() > 26}">
             <div>
                 <div>
                     <img src="images/9.png">
                 </div>
                 <div id="booktitle">
-                    <a href=""> 書籍標題</a>   
+                    <a href="${segments[24]}"> ${segments[25]}</a>   
                     <div id="bookinfo">
-                    書籍資訊
+                    ${segments[26]}
                     </div>
                 </div>
             </div>
+            </c:if>
+            
+            <c:if test="${result.size() > 29}">
             <div>
                 <div>
                     <img src="images/10.png">
                 </div>
                 <div id="booktitle">
-                    <a href=""> 書籍標題</a>   
+                    <a href="${segments[27]}"> ${segments[28]}</a>   
                     <div id="bookinfo">
-                    書籍資訊
+                    ${segments[29]}
                     </div>
                 </div>
             </div>
+            </c:if>
         </div>
         
     </body>
 
     <script type="text/javascript">
-        function search(){
-
-            var text = "";
-            var text = document.getElementById('search').value;
-
-            if(text !== ""){
-                location.href=("resultPage.html");
-             }else{
-               alert('請輸入關鍵字!');
-            }
-
-        }
+	    function validateForm() {
+	
+	        var searchTerm = document.getElementById("searchTerm").value;
+	        
+	        if(searchTerm.trim() === ""){
+	        	alert('請輸入關鍵字!');
+	            return false;
+	        }
+	        /* window.location.href = "WaitingPage.jsp"; */
+	        return true;
+	
+	    }
     </script>
 </html>

@@ -10,6 +10,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import jakarta.servlet.http.HttpServlet;
+
 public class GoogleQuery {
 	public String keyword;
 	public String url;
