@@ -1,5 +1,7 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -146,7 +148,15 @@ public class Detail {
             return content;
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println(citeUrl);
+            FileWriter fileWriter = new FileWriter("src/main/java/resources/denyWebsite.txt", true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+            // 寫入內容到文件
+            bufferedWriter.write(citeUrl);
+            bufferedWriter.newLine(); // 加上換行符號
+
+            // 關閉寫入器
+            bufferedWriter.close();
             return "";
         }
 	}

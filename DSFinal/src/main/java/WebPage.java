@@ -1,3 +1,5 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class WebPage{
@@ -11,10 +13,18 @@ public class WebPage{
 		this.name = name;
 	}
 
-	public void setScore(KeywordList keywords) throws IOException{
-		Score temp = new Score(keywords);
-		score = 0;
-		score += temp.score(url);
-		relativeWord = temp.getRelativeWord();
+	public void setScore(KeywordList keywords) {
+		Score temp;
+		try {
+			temp = new Score(keywords);
+			score = 0;
+			score += temp.score(url);
+			relativeWord = temp.getRelativeWord();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			score = 0;
+			relativeWord = "";
+		}
 	}
 }

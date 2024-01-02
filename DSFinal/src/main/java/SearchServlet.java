@@ -87,7 +87,7 @@ public class SearchServlet extends HttpServlet {
 		}
 		
         for (String name : searchingName) {
-        	String searchQuery = name + " 書";
+        	String searchQuery = name + "書";
         	HashMap<String, String> searchResults = new GoogleQuery(searchQuery).search();
 
         	for (String title : searchResults.keySet()) {
@@ -97,9 +97,10 @@ public class SearchServlet extends HttpServlet {
         
         for (WebNode node : tree.root.children) {
         	HashMap<String, String> searchResults = new GoogleQuery(node).query();
-        	
-        	for (String title : searchResults.keySet()) {
-        		node.addChild(new WebNode(new WebPage(searchResults.get(title), title)));
+        	if (searchResults != null) {
+        		for (String title : searchResults.keySet()) {
+            		node.addChild(new WebNode(new WebPage(searchResults.get(title), title)));
+            	}
         	}
         }
 

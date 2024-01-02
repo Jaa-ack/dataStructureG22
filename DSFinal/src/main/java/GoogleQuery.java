@@ -1,4 +1,6 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -15,7 +17,6 @@ import jakarta.servlet.http.HttpServlet;
 public class GoogleQuery {
 	public String keyword;
 	public String url;
-	public String content;
 	
 	public GoogleQuery(String keyword){
 		this.keyword = keyword;
@@ -31,59 +32,73 @@ public class GoogleQuery {
 		this.url = node.webPage.url;
 	}
 	
-	private String fetchContent() throws IOException{
-		String retVal = "";
-
-		URL u = new URL(url);
-		URLConnection conn = u.openConnection();
-		//set HTTP header
-		conn.setRequestProperty("User-agent", "Chrome/107.0.5304.107");
-		InputStream in = conn.getInputStream();
-
-		InputStreamReader inReader = new InputStreamReader(in, "utf-8");
-		BufferedReader bufReader = new BufferedReader(inReader);
-		String line = null;
-
-		while((line = bufReader.readLine()) != null){
-			retVal += line;
-		}
-		return retVal;
-	}
-	
-	public HashMap<String, String> query() throws IOException{
+	public HashMap<String, String> query() throws IOException {
 		HashMap<String, String> retVal = new HashMap<String, String>();
-		Document doc = Jsoup.connect(url).get();
-        Elements links = doc.select("a[href]"); // 選擇所有帶有 href 屬性的 a 標籤
+		Document doc;
+		try {
+			doc = Jsoup.connect(url).get();
+			Elements links = doc.select("div.content a[href]"); // 選擇所有帶有 href 屬性的 a 標籤
+	        
+	        for (Element link : links) {
+	        	String title = link.text(); // 取得連結的文字內容（標題）
+	            String subLink = link.attr("abs:href"); // 取得絕對連結
+	            retVal.put(title, subLink);
+	        }
+			
+			return retVal;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			FileWriter fileWriter = new FileWriter("src/main/java/resources/denyWebsite.txt", true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+            // 寫入內容到文件
+            bufferedWriter.write(url);
+            bufferedWriter.newLine(); // 加上換行符號
+
+            // 關閉寫入器
+            bufferedWriter.close();
+			return new HashMap<String, String>();
+		}
         
-        for (Element link : links) {
-        	String title = link.text(); // 取得連結的文字內容（標題）
-            String subLink = link.attr("abs:href"); // 取得絕對連結
-            retVal.put(title, subLink);
-        }
-		
-		return retVal;
 	}
 	
-	public HashMap<String, String> search() throws IOException {
-        Document doc = Jsoup.connect(url).get();
-        HashMap<String, String> retVal = new HashMap<String, String>();
-        String title = "";
-        String link = "";
+	public HashMap<String, String> search() throws IOException  {
+        Document doc;
+		try {
+			doc = Jsoup.connect(url).get();
+			HashMap<String, String> retVal = new HashMap<String, String>();
+	        String title = "";
+	        String link = "";
 
-        // 找到搜尋結果中每個網站的標題和名稱
-        Elements searchResults = doc.select("div.g");
-        for (Element result : searchResults) {
-            Element titleElement = result.selectFirst("h3");
-            if (titleElement != null) {
-                title = titleElement.text();
-            }
+	        // 找到搜尋結果中每個網站的標題和名稱
+	        Elements searchResults = doc.select("div.g");
+	        for (Element result : searchResults) {
+	            Element titleElement = result.selectFirst("h3");
+	            if (titleElement != null) {
+	                title = titleElement.text();
+	            }
 
-            Element linkElement = result.selectFirst("a");
-            if (linkElement != null) {
-                link = linkElement.attr("href");
-            }
-            retVal.put(title, link);
-        }
-        return retVal;
+	            Element linkElement = result.selectFirst("a");
+	            if (linkElement != null) {
+	                link = linkElement.attr("href");
+	            }
+	            retVal.put(title, link);
+	        }
+	        return retVal;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			FileWriter fileWriter = new FileWriter("src/main/java/resources/denyWebsite.txt", true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+            // 寫入內容到文件
+            bufferedWriter.write(url);
+            bufferedWriter.newLine(); // 加上換行符號
+
+            // 關閉寫入器
+            bufferedWriter.close();
+			return new HashMap<String, String>();
+		}
 	}
 }

@@ -1,3 +1,5 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,18 +19,26 @@ public class Score {
 		relativeWord = "";
 	}
 	
-	public int score(String url) throws IOException {
-		String content = fetchContent(url);
-		int score = 0;
-		for (Keyword key : keywords) {
-			int count = BoyerMoore(content, key.getName());
-			if (count > 0) {
-				relativeWord += key + "、";
+	public int score(String url) {
+		String content;
+		try {
+			content = fetchContent(url);
+			int score = 0;
+			for (Keyword key : keywords) {
+				int count = BoyerMoore(content, key.getName());
+				if (count > 0) {
+					relativeWord += key.getName() + "、";
+				}
+				score += key.getOrder() * count;
 			}
-			score += key.getOrder() * count;
+			
+			return score;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 0;
 		}
 		
-		return score;
 	}
 	
 	public String getRelativeWord() {
@@ -43,8 +53,16 @@ public class Score {
             String content = body.text();
             return content;
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println(citeUrl);
+        	e.printStackTrace();
+            FileWriter fileWriter = new FileWriter("src/main/java/resources/stopWords.txt", true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+            // 寫入內容到文件
+            bufferedWriter.write(citeUrl);
+            bufferedWriter.newLine(); // 加上換行符號
+
+            // 關閉寫入器
+            bufferedWriter.close();
             return "";
         }
 	}
