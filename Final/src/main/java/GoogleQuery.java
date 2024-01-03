@@ -48,7 +48,7 @@ public class GoogleQuery {
 	}
 	
 	public HashMap<String, String> search() throws IOException  {
-        Document doc;
+		Document doc;
 		try {
 			doc = Jsoup.connect(url).get();
 			HashMap<String, String> retVal = new HashMap<String, String>();
@@ -58,22 +58,22 @@ public class GoogleQuery {
 	        // 找到搜尋結果中每個網站的標題和名稱
 	        Elements searchResults = doc.select("div.g");
 	        for (Element result : searchResults) {
-	            Element titleElement = result.selectFirst("h3");
-	            if (titleElement != null) {
-	                title = titleElement.text();
-	            }
+	        	Element titleElement = result.selectFirst("h3");
+	        	if (titleElement != null) {
+	        		title = titleElement.text();
+	        	}
 
-	            Element linkElement = result.selectFirst("a");
-	            if (linkElement != null) {
-	                link = linkElement.attr("href");
-	            }
-	            retVal.put(title, link);
+	        	Element linkElement = result.selectFirst("a");
+	        	if (linkElement != null) {
+	        		link = linkElement.attr("href");
+	        	}
+	        	retVal.put(title, link);
 	        }
 	        return retVal;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return new HashMap<String, String>();
+			return null;
 		}
 	}
 }
