@@ -5,8 +5,21 @@
     <meta charset="utf-8">
     <style type = "text/css">
 
-            input[type="text"]{ 
+	    form{
+
                 opacity: 0.80;
+                display: flex;
+                flex-direction: row;
+                height: 60px;
+                width: 500px;
+                left:50%;
+                top: 40%;
+                margin: -16px 0 0 -240px;
+                position: absolute;
+
+            }
+		
+            input[type="text"]{ 
                 background: #7DBEB4;
                 border:2px black solid;
                 text-align: left;
@@ -16,16 +29,10 @@
                 width: 400px;
                 font-weight: bold;
                 padding-left: 10px;
-                position: absolute;
-                left:50%;
-                top: 40%;
-                margin: -16px 0 0 -240px;
                 
             }
             
             input[type="submit"]{
-                opacity: 0.80;
-                -webkit-text-fill-color:black;
                 background:#739DB0;
                 border: 2px black solid;
                 text-align: center;
@@ -33,11 +40,6 @@
                 padding: 6px;
                 height: 60px;
                 width: 100px;
-                position: absolute;
-                left:50%;
-                top: 40%;
-                margin: -16px 0 0 160px;
-
             }
             
             body{
