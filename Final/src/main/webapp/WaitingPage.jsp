@@ -13,7 +13,7 @@
             left: 50%;
             top: 30%;
             margin: -150px 0 0 -150px;
-            background-image: url(a-background.png);
+            background-image: url(images/a-background.png);
             background-size:contain;
             background-repeat: no-repeat;
             background-position: bottom,center;
@@ -36,7 +36,7 @@
             height: 50px;
             width: 100px;
             top:0%;
-            background-image: url(a3.png);
+            background-image: url(images/a3.png);
             background-size:contain;
             background-repeat: no-repeat;
             background-position: bottom,center;
