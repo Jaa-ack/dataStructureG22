@@ -77,6 +77,7 @@ public class Detail {
 			content = fetchParagraph(url);
 			
 	        String article = ZhConverterUtil.toTraditional(content);
+	        article = article.toLowerCase();
 			
 	        // 使用jieba分詞工具進行中文分詞
 			JiebaSegmenter segmenter = new JiebaSegmenter();

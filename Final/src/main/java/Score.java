@@ -22,6 +22,7 @@ public class Score {
 		try {
 			String article = fetchContent(url);
 			content = ZhConverterUtil.toTraditional(article);
+			content = content.toLowerCase();
 			int score = 0;
 			
 			for (int i = keywords.size(); i > 0; i--) {
