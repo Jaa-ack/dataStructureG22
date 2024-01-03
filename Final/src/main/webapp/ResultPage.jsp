@@ -71,7 +71,7 @@
                 height: 70px;
                 margin-top: 20px;
                 border-radius: 0px;
-                font-size: 45px;
+                font-size: 30px;
                 margin-left: 30px;
                 display: flex;
                 flex-direction: column;
@@ -86,7 +86,7 @@
                 margin-top: 5px;
                 margin-left: 10%;
                 border-radius: 0px;
-                font-size: 25px;
+                font-size: 15px;
                 margin-left: 0px;
                 font-weight: bold;
                 color:black;
