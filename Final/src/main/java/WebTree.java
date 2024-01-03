@@ -26,7 +26,7 @@ public class WebTree{
         nodeList.sort(new Comparator<WebNode>() {
             @Override
             public int compare(WebNode node1, WebNode node2) {
-            	return Integer.compare(node2.nodeScore, node1.nodeScore);
+            	return Double.compare(node2.nodeScore, node1.nodeScore);
             }
         });
 

@@ -1,9 +1,8 @@
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+import java.text.DecimalFormat;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,8 +35,9 @@ public class SearchServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		request.setCharacterEncoding("UTF-8");
 		String topic = request.getParameter("searchTerm");
-	      
+	    System.out.println(topic);
 		// 取得關鍵字
 		HashMap<String, String> topicResult = new GoogleQuery(topic).search();
 		KeywordList keyList = new Detail().firstFinding(topicResult);
@@ -88,22 +88,24 @@ public class SearchServlet extends HttpServlet {
 			}
 		}
 		      
-		for (WebNode node : tree.root.children) {
-			HashMap<String, String> searchResults = new GoogleQuery(node).query();
-			if (searchResults != null) {
-				for (String title : searchResults.keySet()) {
-					node.addChild(new WebNode(new WebPage(searchResults.get(title), title)));
-				}
-			}
-		}
+//		for (WebNode node : tree.root.children) {
+//			HashMap<String, String> searchResults = new GoogleQuery(node).query();
+//			if (searchResults != null) {
+//				for (String title : searchResults.keySet()) {
+//					node.addChild(new WebNode(new WebPage(searchResults.get(title), title)));
+//				}
+//			}
+//		}
 
 		tree.setPostOrderScore(keyList);
 		List<WebNode> node = tree.rearrangeNodesByScore();
-		String result = "";
+		String result = topic + "~";
 		for (int i = 1; i < 30; i++) {
 			result += node.get(i).webPage.url + "~";
 			result += node.get(i).webPage.name + "~";
-			result += node.get(i).webPage.relativeWord + "分數：" + node.get(i).nodeScore  + "~";
+			DecimalFormat df = new DecimalFormat("#.##");
+	        String score = df.format(node.get(i).nodeScore);
+			result += node.get(i).webPage.relativeWord + "分數：" + score  + "~";
 		}
 		
 	    // 處理後的數據存儲在 request 屬性中以便在 JSP 中訪問

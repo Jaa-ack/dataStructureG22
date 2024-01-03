@@ -23,7 +23,7 @@ public class WebPage{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			score = 0;
-			relativeWord = "錯誤";
+			relativeWord = "";
 		}
 	}
 }

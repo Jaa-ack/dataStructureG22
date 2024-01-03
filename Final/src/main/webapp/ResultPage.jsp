@@ -122,7 +122,7 @@
     <body bgcolor="1F2D32">
 
 		<form action="SearchServlet" method="post" onsubmit="return validateForm()">
-            <input type="text" id="searchTerm" name="searchTerm">
+            <input type="text" id="searchTerm" name="searchTerm" value = "${segments[0]}">
             <input type="submit" value="搜尋">
 		</form>
 
@@ -133,9 +133,9 @@
                     <img src="images/1.png">
                 </div>
                 <div id="booktitle">
-                    <a href="${segments[0]}"> ${segments[1]}</a>   
+                    <a href="${segments[1]}"> ${segments[2]}</a>   
                     <div id="bookinfo">
-                    相關關鍵字：${segments[2]}
+                    相關關鍵字：${segments[3]}
                     </div>
                 </div>
             </div>
@@ -145,9 +145,9 @@
                     <img src="images/2.png">
                 </div>
                 <div id="booktitle">
-                    <a href="${segments[3]}"> ${segments[4]}</a>   
+                    <a href="${segments[4]}"> ${segments[5]}</a>   
                     <div id="bookinfo">
-                    相關關鍵字：${segments[5]}
+                    相關關鍵字：${segments[6]}
                     </div>
                 </div>
             </div>
@@ -157,9 +157,9 @@
                     <img src="images/3.png">
                 </div>
                 <div id="booktitle">
-                    <a href="${segments[6]}"> ${segments[7]}</a>   
+                    <a href="${segments[7]}"> ${segments[8]}</a>   
                     <div id="bookinfo">
-                    相關關鍵字：${segments[8]}
+                    相關關鍵字：${segments[9]}
                     </div>
                 </div>
             </div>
@@ -169,9 +169,9 @@
                     <img src="images/4.png">
                 </div>
                 <div id="booktitle">
-                    <a href="${segments[9]}"> ${segments[10]}</a>   
+                    <a href="${segments[10]}"> ${segments[11]}</a>   
                     <div id="bookinfo">
-                    相關關鍵字：${segments[11]}
+                    相關關鍵字：${segments[12]}
                     </div>
                 </div>
             </div>
@@ -181,9 +181,9 @@
                     <img src="images/5.png">
                 </div>
                 <div id="booktitle">
-                    <a href="${segments[12]}"> ${segments[13]}</a>   
+                    <a href="${segments[13]}"> ${segments[14]}</a>   
                     <div id="bookinfo">
-                    相關關鍵字：${segments[14]}
+                    相關關鍵字：${segments[15]}
                     </div>
                 </div>
             </div>
@@ -193,9 +193,9 @@
                     <img src="images/6.png">
                 </div>
                 <div id="booktitle">
-                    <a href="${segments[15]}"> ${segments[16]}</a>   
+                    <a href="${segments[16]}"> ${segments[17]}</a>   
                     <div id="bookinfo">
-                    相關關鍵字：${segments[17]}
+                    相關關鍵字：${segments[18]}
                     </div>
                 </div>
             </div>
@@ -205,9 +205,9 @@
                     <img src="images/7.png">
                 </div>
                 <div id="booktitle">
-                    <a href="${segments[18]}"> ${segments[19]}</a>   
+                    <a href="${segments[19]}"> ${segments[20]}</a>   
                     <div id="bookinfo">
-                    相關關鍵字：${segments[20]}
+                    相關關鍵字：${segments[21]}
                     </div>
                 </div>
             </div>
@@ -217,9 +217,9 @@
                     <img src="images/8.png">
                 </div>
                 <div id="booktitle">
-                    <a href="${segments[21]}"> ${segments[22]}</a>   
+                    <a href="${segments[22]}"> ${segments[23]}</a>   
                     <div id="bookinfo">
-                    相關關鍵字：${segments[23]}
+                    相關關鍵字：${segments[24]}
                     </div>
                 </div>
             </div>
@@ -229,9 +229,9 @@
                     <img src="images/9.png">
                 </div>
                 <div id="booktitle">
-                    <a href="${segments[24]}"> ${segments[25]}</a>   
+                    <a href="${segments[25]}"> ${segments[26]}</a>   
                     <div id="bookinfo">
-                    相關關鍵字：${segments[26]}
+                    相關關鍵字：${segments[27]}
                     </div>
                 </div>
             </div>
@@ -241,9 +241,9 @@
                     <img src="images/10.png">
                 </div>
                 <div id="booktitle">
-                    <a href="${segments[27]}"> ${segments[28]}</a>   
+                    <a href="${segments[28]}"> ${segments[29]}</a>   
                     <div id="bookinfo">
-                    相關關鍵字：${segments[29]}
+                    相關關鍵字：${segments[30]}
                     </div>
                 </div>
             </div>

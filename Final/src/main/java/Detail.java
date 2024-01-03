@@ -8,6 +8,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -76,12 +78,18 @@ public class Detail {
 		try {
 			content = fetchParagraph(url);
 			
-	        String article = ZhConverterUtil.toTraditional(content);
-	        article = article.toLowerCase();
+	        content = ZhConverterUtil.toTraditional(content);
+	        // 正則表達式，用於匹配英文字母
+	        String regex = "[a-zA-Z]";
+	        Pattern pattern = Pattern.compile(regex);
+	        Matcher matcher = pattern.matcher(content);
+
+	        // 使用 Matcher 尋找匹配的字母並替換為空字串
+	        content = matcher.replaceAll("");
 			
 	        // 使用jieba分詞工具進行中文分詞
 			JiebaSegmenter segmenter = new JiebaSegmenter();
-			List<SegToken> tokens = segmenter.process(article, JiebaSegmenter.SegMode.INDEX);
+			List<SegToken> tokens = segmenter.process(content, JiebaSegmenter.SegMode.INDEX);
 	
 			// 加載停用詞表
 			Set<String> stopWords = loadStopWords("/stopWords.txt");

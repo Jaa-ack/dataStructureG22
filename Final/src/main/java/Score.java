@@ -1,6 +1,8 @@
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -17,13 +19,19 @@ public class Score {
 		relativeWord = "";
 	}
 	
-	public int score(String url) {
+	public double score(String url) {
 		String content;
 		try {
-			String article = fetchContent(url);
-			content = ZhConverterUtil.toTraditional(article);
-			content = content.toLowerCase();
-			int score = 0;
+			content = fetchContent(url);
+			content = ZhConverterUtil.toTraditional(content);
+			String regex = "[a-zA-Z]";
+	        Pattern pattern = Pattern.compile(regex);
+	        Matcher matcher = pattern.matcher(content);
+
+	        // 使用 Matcher 尋找匹配的字母並替換為空字串
+	        content = matcher.replaceAll("");
+			
+			double score = 0;
 			
 			for (int i = keywords.size(); i > 0; i--) {
 				int count = BoyerMoore(content, keywords.get(i-1).getName());
@@ -31,13 +39,13 @@ public class Score {
 					relativeWord += keywords.get(i-1).getName() + "、";
 				}
 				if (keywords.get(i-1).getOrder() == 4) {
-					score += keywords.get(i-1).getOrder() * count * 10;
+					score += keywords.get(i-1).getOrder() * count * 50;
 				}else if (keywords.get(i-1).getOrder() == 3) {
-					score += keywords.get(i-1).getOrder() * count * 5;
+					score += keywords.get(i-1).getOrder() * count * 30;
 				}else if (keywords.get(i-1).getOrder() == 2) {
-					score += keywords.get(i-1).getOrder() * count * 3;
+					score += keywords.get(i-1).getOrder() * count * 5;
 				}else{
-					score += keywords.get(i-1).getOrder() * count * 1;
+					score += keywords.get(i-1).getOrder() * count * 2;
 				}
 				
 			}

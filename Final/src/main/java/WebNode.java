@@ -5,7 +5,7 @@ public class WebNode{
 	public WebNode parent;
 	public ArrayList<WebNode> children;
 	public WebPage webPage;
-	public int nodeScore;
+	public double nodeScore;
 
 	public WebNode(WebPage webPage){
 		this.webPage = webPage;
@@ -18,9 +18,13 @@ public class WebNode{
 				child.setNodeScore(keywords);
 				nodeScore += child.nodeScore;
 			}
+			nodeScore = nodeScore / children.size() / 4;
+			webPage.setScore(keywords);
+			nodeScore += webPage.score * 0.75;
+		}else {
+			webPage.setScore(keywords);
+			nodeScore += webPage.score;
 		}
-		webPage.setScore(keywords);
-		nodeScore += webPage.score;
 	}
 
 	public void addChild(WebNode child) {
