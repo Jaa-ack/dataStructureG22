@@ -57,7 +57,7 @@ public class SearchServlet extends HttpServlet {
 		keyList.add(new Keyword(topic, 4, 2));
 						
 		// 取得搜尋結果並評分
-		String encodeKeyword=java.net.URLEncoder.encode(topic,"utf-8");
+		String encodeKeyword=java.net.URLEncoder.encode(topic + "書","utf-8");
 		WebPage rootPage = new WebPage("https://www.google.com/search?q="+encodeKeyword+"&oe=utf8&num=20", topic);
 		WebTree tree = new WebTree(rootPage);
 			
@@ -88,14 +88,14 @@ public class SearchServlet extends HttpServlet {
 			}
 		}
 		      
-//		for (WebNode node : tree.root.children) {
-//			HashMap<String, String> searchResults = new GoogleQuery(node).query();
-//			if (searchResults != null) {
-//				for (String title : searchResults.keySet()) {
-//					node.addChild(new WebNode(new WebPage(searchResults.get(title), title)));
-//				}
-//			}
-//		}
+		for (WebNode node : tree.root.children) {
+			HashMap<String, String> searchResults = new GoogleQuery(node).query();
+			if (searchResults != null) {
+				for (String title : searchResults.keySet()) {
+					node.addChild(new WebNode(new WebPage(searchResults.get(title), title)));
+				}
+			}
+		}
 
 		tree.setPostOrderScore(keyList);
 		List<WebNode> node = tree.rearrangeNodesByScore();

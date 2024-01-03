@@ -30,6 +30,7 @@ public class WebTree{
             }
         });
 
+        nodeList.remove(root);
         return nodeList;
     }
 
