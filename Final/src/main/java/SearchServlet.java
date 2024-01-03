@@ -1,11 +1,4 @@
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-
-
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,9 +9,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import jakarta.servlet.RequestDispatcher;
-
 /**
  * Servlet implementation class SearchServlet
  */
@@ -33,7 +23,7 @@ public class SearchServlet extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-
+    
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -65,7 +55,7 @@ public class SearchServlet extends HttpServlet {
 		}
 						
 		keyList.add(new Keyword(topic, 4, 2));
-				
+						
 		// 取得搜尋結果並評分
 		String encodeKeyword=java.net.URLEncoder.encode(topic,"utf-8");
 		WebPage rootPage = new WebPage("https://www.google.com/search?q="+encodeKeyword+"&oe=utf8&num=20", topic);
