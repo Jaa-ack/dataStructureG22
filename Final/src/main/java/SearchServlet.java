@@ -37,30 +37,31 @@ public class SearchServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		String topic = request.getParameter("searchTerm");
-	    System.out.println(topic);
-		// 取得關鍵字
+		
+		// 取得第一階段關鍵字
 		HashMap<String, String> topicResult = new GoogleQuery(topic).search();
 		KeywordList keyList = new Detail().firstFinding(topicResult);
 						
+		// 對第一階段關鍵字再搜尋
 		ArrayList<Keyword> temp = new ArrayList<Keyword>(keyList.getkList());
 		for (Keyword keyword : temp){
-			// 對關鍵字搜尋並取得其常出現的字
 			HashMap<String, String> searchingResult = new GoogleQuery(keyword.getName()).search();
 			KeywordList kList = new Detail().keywordChecking(searchingResult);
 							
-			if (kList.hasName(topic) != null) { // 如果關鍵字中常出現的字有提到主題
+			if (kList.hasName(topic) != null) { // 如果關鍵字中常出現的字有提到主題將其權重加重
 				keyList.addList(kList, 2);
 				keyList.add(new Keyword(keyword.getName(), 3, keyword.getTimes()));
 			}
 		}
 						
-		keyList.add(new Keyword(topic, 4, 2));
+		keyList.add(new Keyword(topic, 4, 2)); // 主題設定權重加入關鍵字列表
 						
 		// 取得搜尋結果並評分
 		String encodeKeyword=java.net.URLEncoder.encode(topic + "書","utf-8");
 		WebPage rootPage = new WebPage("https://www.google.com/search?q="+encodeKeyword+"&oe=utf8&num=20", topic);
 		WebTree tree = new WebTree(rootPage);
-			
+		
+		// 取關鍵字列表最重要的三個關鍵字
 		ArrayList<String> searchingName = keyList.outputOrder(3);
 		if (searchingName.size() < 3) {
 			for (int i = keyList.outputOrder(2).size() - 1; i > 0; i--) {
@@ -78,7 +79,8 @@ public class SearchServlet extends HttpServlet {
 				}
 			}
 		}
-				
+		
+		// 對三個關鍵字搜尋並取得其搜尋結果
 		for (String name : searchingName) {
 			String searchQuery = name + "書";
 			HashMap<String, String> searchResults = new GoogleQuery(searchQuery).search();
@@ -87,7 +89,8 @@ public class SearchServlet extends HttpServlet {
 				tree.root.addChild(new WebNode(new WebPage(searchResults.get(title), title)));
 			}
 		}
-		      
+
+		// 取得搜尋結果的子網頁
 		for (WebNode node : tree.root.children) {
 			HashMap<String, String> searchResults = new GoogleQuery(node).query();
 			if (searchResults != null) {
@@ -97,6 +100,7 @@ public class SearchServlet extends HttpServlet {
 			}
 		}
 
+		// 將tree所有網頁評分並且排序
 		tree.setPostOrderScore(keyList);
 		List<WebNode> node = tree.rearrangeNodesByScore();
 		String result = topic + "~";
@@ -108,7 +112,6 @@ public class SearchServlet extends HttpServlet {
 			result += node.get(i).webPage.relativeWord + "分數：" + score  + "~";
 		}
 		
-	    // 處理後的數據存儲在 request 屬性中以便在 JSP 中訪問
 	    String[] segments = result.split("~");
 	    request.setAttribute("segments", segments);
 

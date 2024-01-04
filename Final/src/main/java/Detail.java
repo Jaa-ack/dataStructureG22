@@ -19,26 +19,26 @@ import com.github.houbb.opencc4j.util.ZhConverterUtil;
 import com.huaban.analysis.jieba.JiebaSegmenter;
 import com.huaban.analysis.jieba.SegToken;
 
-
 public class Detail {
 	public Detail() {
 	}
 	
 	public KeywordList firstFinding(HashMap<String, String> searchingResult) { // 搜尋各網站關鍵字
-		if (searchingResult.isEmpty()) { // 如果google搜尋下來沒有結果
-			// 回傳使用者錯誤
+		if (searchingResult.isEmpty()) {
 			return null;
 		}
-		KeywordList firstList = new KeywordList();
 		
+		KeywordList firstList = new KeywordList();
 		ArrayList<String> urls = new ArrayList<>();
 		for(String value: searchingResult.values()) {
 			urls.add(value);
 		}
+		
+		// 排除自訂拒絕網站
         ArrayList<String> denyList = readDenyList("/denyWebsite.txt");
         ArrayList<String> filteredUrls = filterDeniedSites(urls, denyList);
         
-		for (int i = 0; i < Math.min(filteredUrls.size(), 10); i++) {
+		for (int i = 0; i < Math.min(filteredUrls.size(), 10); i++) { // 取得第一階段關鍵字
 			if (filteredUrls.get(i).contains("wikipedia")) {
 				firstList = getKeyword(filteredUrls.get(i), 10);
 				break;
@@ -50,21 +50,22 @@ public class Detail {
 		return firstList;
 	}
 	
-	public KeywordList keywordChecking(HashMap<String, String> searchingResult) {
+	public KeywordList keywordChecking(HashMap<String, String> searchingResult) { // 對第一階段關鍵字再檢查作為第二階段關鍵字
 		if (searchingResult.isEmpty()) { // 如果google搜尋下來沒有結果
-			// 回傳使用者錯誤
 			return null;
 		}
-		KeywordList list = new KeywordList();
 		
+		KeywordList list = new KeywordList();
 		ArrayList<String> urls = new ArrayList<>();
 		for(String value: searchingResult.values()) {
 			urls.add(value);
 		}
+		
+		// 排除自訂拒絕網站
         ArrayList<String> denyList = readDenyList("/denyWebsite.txt");
         ArrayList<String> filteredUrls = filterDeniedSites(urls, denyList);
 		
-        for (int i = 0; i < Math.min(filteredUrls.size(), 10); i++) {
+        for (int i = 0; i < Math.min(filteredUrls.size(), 10); i++) { // 取得再搜尋結果中頻率前二的關鍵字
 			KeywordList keywords = getKeyword(filteredUrls.get(i), 2);
 			list.addList(keywords);
 		}
@@ -78,23 +79,21 @@ public class Detail {
 		try {
 			content = fetchParagraph(url);
 			
+			// 內文翻譯成繁體中文並且排除英文內容
 	        content = ZhConverterUtil.toTraditional(content);
-	        // 正則表達式，用於匹配英文字母
 	        String regex = "[a-zA-Z]";
 	        Pattern pattern = Pattern.compile(regex);
 	        Matcher matcher = pattern.matcher(content);
-
-	        // 使用 Matcher 尋找匹配的字母並替換為空字串
 	        content = matcher.replaceAll("");
 			
 	        // 使用jieba分詞工具進行中文分詞
 			JiebaSegmenter segmenter = new JiebaSegmenter();
 			List<SegToken> tokens = segmenter.process(content, JiebaSegmenter.SegMode.INDEX);
 	
-			// 加載停用詞表
+			// 排除自訂停用詞
 			Set<String> stopWords = loadStopWords("/stopWords.txt");
 	
-			// 建立詞彙與出現次數的映射表
+			// 建立詞彙與出現次數的映射表，同時排除純數字內容
 			Map<String, Integer> wordFrequency = new HashMap<>();
 			for (SegToken token : tokens) {
 			    String word = token.word.trim();
@@ -129,7 +128,7 @@ public class Detail {
 		return keywords;
 	}
 	
-	private Set<String> loadStopWords(String fileName) {
+	private Set<String> loadStopWords(String fileName) { // 讀取stopWord.txt中的內容並返回一個包含停用詞的列表
 	    Set<String> stopWords = new HashSet<>();
 	    InputStream inputStream = getClass().getResourceAsStream(fileName);
 
@@ -155,11 +154,10 @@ public class Detail {
 	    return stopWords;
 	}
 
-	
-	private String fetchParagraph(String citeUrl) throws IOException{
+	private String fetchParagraph(String citeUrl) throws IOException { // 取得內文文章
 		try {
 			Document doc = Jsoup.connect(citeUrl).get();
-            Elements paragraphs = doc.select("p, h1, h2, h3, h4, h5, h6"); // 選擇所有的段落 <p>
+            Elements paragraphs = doc.select("p, h1, h2, h3, h4, h5, h6");
             String content = paragraphs.text();
             return content;
         } catch (Exception e) {
@@ -168,8 +166,7 @@ public class Detail {
         }
 	}
 
-	// 讀取 denyWebsite.txt 中的內容並返回一個包含拒絕網站的列表
-	private ArrayList<String> readDenyList(String fileName) {
+	private ArrayList<String> readDenyList(String fileName) { // 讀取denyWebsite.txt中的內容並返回一個包含拒絕網站的列表
 		ArrayList<String> denyList = new ArrayList<>();
 	    InputStream inputStream = getClass().getResourceAsStream(fileName);
 	    
@@ -195,9 +192,7 @@ public class Detail {
 	    return denyList;
 	}
 
-
-    // 過濾掉包含在拒絕清單中的 URL
-    private ArrayList<String> filterDeniedSites(List<String> urls, List<String> denyList) {
+    private ArrayList<String> filterDeniedSites(List<String> urls, List<String> denyList) { // 過濾掉包含在拒絕清單中的URL
     	ArrayList<String> filteredUrls = new ArrayList<>();
     	for (String urlString : urls) {
             boolean shouldSkip = denyList.stream().anyMatch(urlString::contains);

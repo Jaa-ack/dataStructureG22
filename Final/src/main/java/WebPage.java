@@ -7,12 +7,12 @@ public class WebPage{
 	public double score;
 	public String relativeWord;
 
-	public WebPage(String url, String name){
+	public WebPage(String url, String name) {
 		this.url = url;
 		this.name = name;
 	}
 
-	public void setScore(KeywordList keywords) {
+	public void setScore(KeywordList keywords) { // 設定page分數
 		Score temp;
 		try {
 			temp = new Score(keywords);

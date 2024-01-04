@@ -10,7 +10,6 @@
                 opacity: 0.80;
                 display: flex;
                 flex-direction: row;
-                height: 60px;
                 width: 500px;
                 left:50%;
                 top: 40%;
@@ -25,7 +24,7 @@
                 text-align: left;
                 font-size: 28px;
                 padding: 6px;
-                height: 60px;
+                height: 45px;
                 width: 400px;
                 font-weight: bold;
                 padding-left: 10px;

@@ -19,20 +19,21 @@ public class Score {
 		relativeWord = "";
 	}
 	
-	public double score(String url) {
+	public double score(String url) { // 對指定網站評分
 		String content;
 		try {
 			content = fetchContent(url);
+			
+			// 內文翻譯成繁體中文並且排除英文內容
 			content = ZhConverterUtil.toTraditional(content);
 			String regex = "[a-zA-Z]";
 	        Pattern pattern = Pattern.compile(regex);
 	        Matcher matcher = pattern.matcher(content);
-
-	        // 使用 Matcher 尋找匹配的字母並替換為空字串
 	        content = matcher.replaceAll("");
 			
 			double score = 0;
 			
+			// 對不同關鍵字權重給分
 			for (int i = keywords.size(); i > 0; i--) {
 				int count = BoyerMoore(content, keywords.get(i-1).getName());
 				if (count > 0) {
@@ -56,17 +57,15 @@ public class Score {
 			e.printStackTrace();
 			return 0;
 		}
-		
 	}
 	
-	public String getRelativeWord() {
+	public String getRelativeWord() { // 取得該網站得分的相關關鍵字
 		return relativeWord;
 	}
 	
-	private String fetchContent(String citeUrl) throws IOException{
+	private String fetchContent(String citeUrl) throws IOException { // 取得內文
 		try {
             Document document = Jsoup.connect(citeUrl).get();
-            // 獲取網頁內容
             Element body = document.body();
             String content = body.text();
             return content;
@@ -76,7 +75,7 @@ public class Score {
         }
 	}
 	
-	public int BoyerMoore(String T, String P){
+	public int BoyerMoore(String T, String P){ // BoyerMoore演算法
     	int i = T.length();
     	int j = P.length();
     	int times = 0;   

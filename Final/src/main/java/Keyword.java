@@ -9,13 +9,11 @@ public class Keyword {
 		this.times = times;
     }
     
-    public String getName()
-    {
+    public String getName() {
     	return name;
     }
     
-    public int getOrder()
-    {
+    public int getOrder() {
     	return order;
     }
     

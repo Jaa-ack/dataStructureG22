@@ -16,8 +16,8 @@
                 font-weight: bold;
                 padding: 4px;
                 padding-left: 10px;
-                height: 60px;
-                width: 800px;
+                height: 49px;
+                width: 782px;
                 position: absolute;
                 left:50%;
                 top: 7%;

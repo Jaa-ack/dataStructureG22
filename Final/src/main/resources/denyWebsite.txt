@@ -1,3 +1,7 @@
+kknews.cc
+/search?num=20&sca
+esg.tsmc.com
+military-osa.ncku.edu.tw
 pdf
 www.cw.com.tw
 www.cheers.com.tw
@@ -27,6 +31,7 @@ www.sap.com
 store.epicgames.com
 www.collinsdictionary.com
 www.tripadvisor.com
+www.sef.org.tw
 www.expedia.com
 futurecity.cw.com
 www.klook.com
@@ -36,6 +41,7 @@ www.mohw.gov.tw
 www.iwriteonline.tw
 www.changkang.gov.tw
 www.ezmoney.com.tw
+www.sef.org.tw
 exam.tcte.edu.tw
 www.changkang.gov.tw
 www4.is.cgu.edu.tw

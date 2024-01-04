@@ -6,23 +6,22 @@ import java.util.List;
 public class WebTree{
 	public WebNode root;
 
-	public WebTree(WebPage rootPage){
+	public WebTree(WebPage rootPage) {
 		this.root = new WebNode(rootPage);
 	}
 
-	public void setPostOrderScore(KeywordList keywords) throws IOException {
+	public void setPostOrderScore(KeywordList keywords) throws IOException { // 設定tree內部所有網頁分數
 		setPostOrderScore(root, keywords);
 	}
 
-	private void setPostOrderScore(WebNode startNode, KeywordList keywords) throws IOException{
+	private void setPostOrderScore(WebNode startNode, KeywordList keywords) throws IOException{ // 設定指定node底下所有網頁分數
 		startNode.setNodeScore(keywords);
 	}
 
-	public List<WebNode> rearrangeNodesByScore() {
+	public List<WebNode> rearrangeNodesByScore() { // 將tree內部網頁一分數重新排序
         List<WebNode> nodeList = new ArrayList<>();
         populateNodes(root, nodeList);
 
-        // Sort the nodeList using the custom comparator
         nodeList.sort(new Comparator<WebNode>() {
             @Override
             public int compare(WebNode node1, WebNode node2) {
@@ -34,8 +33,7 @@ public class WebTree{
         return nodeList;
     }
 
-    // Helper method to populate nodes from tree to a list
-    private void populateNodes(WebNode node, List<WebNode> nodeList) {
+    private void populateNodes(WebNode node, List<WebNode> nodeList) { // 將tree排序成List
         if (node == null) {
             return;
         }
