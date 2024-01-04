@@ -25,7 +25,7 @@
                 text-align: left;
                 font-size: 28px;
                 padding: 6px;
-                height: 60px;
+                height: 55px;
                 width: 400px;
                 font-weight: bold;
                 padding-left: 10px;
