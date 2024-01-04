@@ -62,6 +62,19 @@
                 <div></div>
             </div>
         </div>
+    <form id="form1" onsubmit=" return validateForm()" action="SearchServlet">
+            <input type="text" id="searchTerm" name="searchTerm" value="1">
+            <input type="submit" value="搜尋">
+		</form>
+
+        <script type="text/javascript">
+            var url = location.href ;
+            var temp = url.split('=');
+            var b = document.querySelector('#searchTerm');
+            b.setAttribute('value',temp[1]);
+            alert(temp[1]);
+            form1.submit();
+        </script>
         
 
     </body>
