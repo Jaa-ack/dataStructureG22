@@ -8,6 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.github.houbb.opencc4j.util.ZhConverterUtil;
+import com.google.cloud.translate.Translate;
+import com.google.cloud.translate.TranslateOptions;
+import com.google.cloud.translate.Translation;
 /**
  * Servlet implementation class SearchServlet
  */
@@ -37,6 +42,10 @@ public class SearchServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		String topic = request.getParameter("searchTerm");
+		Translate translate = TranslateOptions.newBuilder().setApiKey("AIzaSyBMt4eeTCcVXYBwu9kZ7bl2uJSJ6myYCZ8").build().getService();
+        Translation translation = translate.translate(topic, Translate.TranslateOption.targetLanguage("zh-TW"));
+        topic = translation.getTranslatedText();
+        topic = ZhConverterUtil.toTraditional(topic);
 		
 		// 取得第一階段關鍵字
 		HashMap<String, String> topicResult = new GoogleQuery(topic).search();

@@ -1,14 +1,15 @@
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import com.github.houbb.opencc4j.util.ZhConverterUtil;
+import com.google.cloud.translate.Translate;
+import com.google.cloud.translate.TranslateOptions;
+import com.google.cloud.translate.Translation;
 
 public class Score {
 	public ArrayList<Keyword> keywords;
@@ -24,12 +25,11 @@ public class Score {
 		try {
 			content = fetchContent(url);
 			
-			// 內文翻譯成繁體中文並且排除英文內容
-			content = ZhConverterUtil.toTraditional(content);
-			String regex = "[a-zA-Z]";
-	        Pattern pattern = Pattern.compile(regex);
-	        Matcher matcher = pattern.matcher(content);
-	        content = matcher.replaceAll("");
+			// 內文翻譯成繁體中文
+			Translate translate = TranslateOptions.newBuilder().setApiKey("AIzaSyBMt4eeTCcVXYBwu9kZ7bl2uJSJ6myYCZ8").build().getService();
+	        Translation translation = translate.translate(content, Translate.TranslateOption.targetLanguage("zh-TW"));
+	        content = translation.getTranslatedText();
+	        content = ZhConverterUtil.toTraditional(content);
 			
 			double score = 0;
 			

@@ -59,5 +59,18 @@
 		    <scope>provided</scope>
 		</dependency>
 		
+		
+		<dependency>
+		  <groupId>com.google.cloud</groupId>
+		  <artifactId>google-cloud-translate</artifactId>
+		  <version>2.32.0</version>
+		</dependency>
+		
+		<dependency>
+	      <groupId>com.google.apis</groupId>
+	      <artifactId>google-api-services-indexing</artifactId>
+	      <version>v3-rev20200804-1.32.1</version>
+	    </dependency>
+		
     </dependencies>
 </project>

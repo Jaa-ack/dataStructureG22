@@ -8,8 +8,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -18,6 +16,10 @@ import org.jsoup.select.Elements;
 import com.github.houbb.opencc4j.util.ZhConverterUtil;
 import com.huaban.analysis.jieba.JiebaSegmenter;
 import com.huaban.analysis.jieba.SegToken;
+
+import com.google.cloud.translate.Translate;
+import com.google.cloud.translate.TranslateOptions;
+import com.google.cloud.translate.Translation;
 
 public class Detail {
 	public Detail() {
@@ -79,12 +81,11 @@ public class Detail {
 		try {
 			content = fetchParagraph(url);
 			
-			// 內文翻譯成繁體中文並且排除英文內容
+			// 內文翻譯成繁體中文
+	        Translate translate = TranslateOptions.newBuilder().setApiKey("AIzaSyBMt4eeTCcVXYBwu9kZ7bl2uJSJ6myYCZ8").build().getService();
+	        Translation translation = translate.translate(content, Translate.TranslateOption.targetLanguage("zh-TW"));
+	        content = translation.getTranslatedText();
 	        content = ZhConverterUtil.toTraditional(content);
-	        String regex = "[a-zA-Z]";
-	        Pattern pattern = Pattern.compile(regex);
-	        Matcher matcher = pattern.matcher(content);
-	        content = matcher.replaceAll("");
 			
 	        // 使用jieba分詞工具進行中文分詞
 			JiebaSegmenter segmenter = new JiebaSegmenter();

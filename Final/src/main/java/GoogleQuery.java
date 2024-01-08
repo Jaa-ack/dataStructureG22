@@ -43,9 +43,13 @@ public class GoogleQuery {
 	        	// 排除自訂拒絕網站
 	        	boolean isDenied = denyList.stream().anyMatch(link.attr("href")::contains);
 	            if (!isDenied) {
-		        	String title = link.text();
-		            String subLink = link.attr("abs:href");
-		            retVal.put(title, subLink);
+	            	if (link.text() != null) {
+	            		if (link.attr("abs:href") != null) {
+	            			String title = link.text();
+	    		            String subLink = link.attr("abs:href");
+	    		            retVal.put(title, subLink);
+	            		}
+	            	}
 		        }
 	        }
 			
@@ -76,12 +80,12 @@ public class GoogleQuery {
 	            if (!isDenied) {
 	            	
 		        	if (titleElement != null) {
-		        		title = titleElement.text();
+		        		if (linkElement != null) {
+		        			title = titleElement.text();
+			        		link = linkElement.attr("href");
+			        		retVal.put(title, link);
+			        	}
 		        	}
-		        	if (linkElement != null) {
-		        		link = linkElement.attr("href");
-		        	}
-		        	retVal.put(title, link);
 	            }
 	        }
 	        return retVal;
